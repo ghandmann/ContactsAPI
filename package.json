@@ -1,0 +1,14 @@
+{
+  "name": "contacts",
+  "version": "1.0.0",
+  "description": "Simple contact manager",
+  "main": "app.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mocha": "^8.4.0"
+  }
+}
