@@ -1,5 +1,4 @@
 const assert = require('assert');
-const { ADDRGETNETWORKPARAMS } = require('dns');
 const Addressbook = require('../addressbook');
 const Contact = require('../contact');
 

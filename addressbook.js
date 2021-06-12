@@ -1,7 +1,11 @@
 const Contact = require("./contact");
 
 class Addressbook {
-    contacts = [];
+    // contacts = [];
+    
+    constructor() {
+        this.contacts = [];
+    }
 
     addContact(contact) {
         if(this.contactExists(contact)) {

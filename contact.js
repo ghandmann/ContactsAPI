@@ -1,14 +1,16 @@
 class Contact {
-    firstName = undefined;
-    lastName = undefined;
-    birthDate = undefined;
-    phoneNumbers = [];
-    emailAddresses = [];
+    // firstName = undefined;
+    // lastName = undefined;
+    // birthDate = undefined;
+    // phoneNumbers = [];
+    // emailAddresses = [];
 
     constructor(firstName, lastName, birthDate) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDate = birthDate;
+        this.phoneNumbers = [];
+        this.emailAddresses = [];
 
         this.validate();
     }
