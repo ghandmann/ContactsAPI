@@ -84,3 +84,4 @@ Das Testframework `mocha` hat auch einen speziellen watch mode. Damit beobachtet
 Damit lässt sich ein schneller feedback loop zwischen Änderung und Testergebnis erreichen.
 
 * Start mocha watch mode: `mocha -w`
+* Create code coverage report: `npm run cover`
