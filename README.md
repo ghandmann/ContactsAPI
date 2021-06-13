@@ -34,6 +34,8 @@ Diese API hat im wesentlichen drei Endpoitns:
    { "firstname": "John", "lastname": "Doe" }
    ```
 
+* `GET /version`: Liefert die aktuelle Release-Version zurück. Nur sinnvoll im Docker-Setup.
+
 ### test/
 
 Im Ordner `test/` befinden sich alle Unit- und IntegrationTests die in diesem Projekt enthalten sind.
