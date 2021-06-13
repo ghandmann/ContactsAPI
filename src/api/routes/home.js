@@ -13,6 +13,8 @@ router.get("/version", (req, res) => {
 
     var versionFile = path.join(appDir, "../", "VERSION");
 
+    res.type("txt");
+
     fs.access(versionFile, (err) => {
         if(err) {
             res.send("UNKNOWN-VERSION")
@@ -23,7 +25,6 @@ router.get("/version", (req, res) => {
                     res.send("UNKNOWN-VERSION")
                 }
                 else {
-                    res.type("txt");
                     res.send(data.toString());
                 }
 
