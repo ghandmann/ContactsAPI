@@ -16,6 +16,8 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+      - name: Create VERSION File
+        run: git describe > src/api/VERSION
       - name: Push to Docker Hub
         uses: docker/build-push-action@v2
         with:
