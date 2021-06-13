@@ -3,7 +3,7 @@ const Addressbook = require('../src/lib/addressbook');
 const Contact = require('../src/lib/contact');
 
 const dummyContact = new Contact("dummy", "dummy");
-describe('An addressbook', function() {
+describe('Addressbook Class', function() {
   let addressbook;
   beforeEach(() => {
     addressbook = new Addressbook();
@@ -35,4 +35,18 @@ describe('An addressbook', function() {
       assert.throws(() => addressbook.assertIsContactObject([1,2,3,4]));
     })
   });
+  describe("can remove contacts", () => {
+    it("should remove an existing contact", () => {
+      addressbook.addContact(dummyContact);
+      assert.strictEqual(addressbook.contacts.length, 1);
+
+      addressbook.removeContact(dummyContact);
+      assert.strictEqual(addressbook.contacts.length, 0);
+    })
+
+    it("should throw on unknown contacts", () => {
+      var unknownContact = new Contact("Not tracked", "by addressbook");
+      assert.throws(() => addressbook.removeContact(unknownContact));
+    })
+  })
 });

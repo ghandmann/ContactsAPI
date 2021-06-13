@@ -4,12 +4,16 @@
   "description": "Simple contact manager",
   "main": "app.js",
   "scripts": {
+    "start": "cd src/api && npm start",
     "test": "mocha",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "postinstall": "cd src/api/ && npm install"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "chai": "^4.3.4",
+    "chai-http": "^4.3.0",
     "mocha": "^8.4.0"
   },
   "devDependencies": {
