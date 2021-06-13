@@ -11,7 +11,7 @@ describe("ContactsAPI", () => {
     describe("GET /api/v1/contacts Endpoint", () => {
         it("should return 200 ok", (done) => {
             chai.request(app).get("/api/v1/contacts").end((err, res) => {
-                res.body.should.be.a("array");
+                res.should.have.status(200);
                 done();
             })
         })
