@@ -8,6 +8,13 @@ Dieses Repository enthält eine Anwendung die Teil der Vorlesung Web Anwendungen
 
 Daher sind einige Ecken und Kannten zum Teil ganz bewusst enthalten. :)
 
+## Mögliche Erweiterungen
+Einige Ideen für mögliche Erweiterungen im Rahmen der Live-Vorlesung oder für den interessierten Studenten zu Hause:
+
+* `clear` Methode für `Addressbook`
+* `findByName` Methode für `Addressbook`
+* Codecoverage für `/version` endpoint
+
 ## Das Repository
 
 ### src/lib/
