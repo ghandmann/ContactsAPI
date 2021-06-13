@@ -1,5 +1,6 @@
 FROM node:14-alpine
 
+COPY .npmrc /app/
 COPY package*.json /app/
 COPY src/api/package*.json /app/src/api/
 
