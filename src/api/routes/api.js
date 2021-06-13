@@ -3,7 +3,8 @@ var router = express.Router();
 
 
 router.get("/api/v1/contacts", (req, res) => {
-    return res.send("list all contacts");
+    const contactsList = [];
+    res.send(contactsList);
 });
 
 router.post("/api/v1/contacts", (req, res) => {
