@@ -1,6 +1,6 @@
 const assert = require('assert');
-const Addressbook = require('../addressbook');
-const Contact = require('../contact');
+const Addressbook = require('../src/lib/addressbook');
+const Contact = require('../src/lib/contact');
 
 const dummyContact = new Contact("dummy", "dummy");
 describe('An addressbook', function() {

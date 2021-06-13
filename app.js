@@ -1,4 +1,4 @@
-let Contact = require("./contact");
+let Contact = require("./src/lib/contact");
 
 let p1 = new Contact("Sven", "Eppler");
 

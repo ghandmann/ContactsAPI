@@ -1,4 +1,4 @@
-const Contact = require("../contact");
+const Contact = require("../src/lib/contact");
 const assert = require("assert");
 
 describe("Contact", () => {
