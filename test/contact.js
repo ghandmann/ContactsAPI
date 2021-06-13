@@ -1,7 +1,7 @@
 const Contact = require("../src/lib/contact");
 const assert = require("assert");
 
-describe("Contact", () => {
+describe("Contact Class", () => {
     describe("constructor", () => {
         it("work with firstname and lastname", () => {
             const newContact = new Contact("John", "Doe");

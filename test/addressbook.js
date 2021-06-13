@@ -3,7 +3,7 @@ const Addressbook = require('../src/lib/addressbook');
 const Contact = require('../src/lib/contact');
 
 const dummyContact = new Contact("dummy", "dummy");
-describe('An addressbook', function() {
+describe('Addressbook Class', function() {
   let addressbook;
   beforeEach(() => {
     addressbook = new Addressbook();
