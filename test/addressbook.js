@@ -35,4 +35,18 @@ describe('Addressbook Class', function() {
       assert.throws(() => addressbook.assertIsContactObject([1,2,3,4]));
     })
   });
+  describe("can remove contacts", () => {
+    it("should remove an existing contact", () => {
+      addressbook.addContact(dummyContact);
+      assert.strictEqual(addressbook.contacts.length, 1);
+
+      addressbook.removeContact(dummyContact);
+      assert.strictEqual(addressbook.contacts.length, 0);
+    })
+
+    it("should throw on unknown contacts", () => {
+      var unknownContact = new Contact("Not tracked", "by addressbook");
+      assert.throws(() => addressbook.removeContact(unknownContact));
+    })
+  })
 });

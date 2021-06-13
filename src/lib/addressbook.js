@@ -15,6 +15,14 @@ class Addressbook {
         this.contacts.push(contact);
     }
 
+    removeContact(contact) {
+        if(!this.contactExists(contact)) {
+            throw new Error("cannot delete a contact that is not in the addressbook!");
+        }
+
+        this.contacts = this.contacts.filter(c => c.getIdentifier() != contact.getIdentifier());
+    }
+
     contactExists(newContact) {
         this.assertIsContactObject(newContact);
 
