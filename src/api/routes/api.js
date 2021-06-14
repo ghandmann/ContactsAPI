@@ -29,7 +29,17 @@ router.post("/api/v1/contacts", (req, res) => {
 })
 
 router.delete("/api/v1/contacts", (req, res) => {
-    return res.send();
+    const {firstname, lastname} = req.body;
+
+    const contactToDelete = new Contact(firstname, lastname);
+
+    if(!addressbookInstance.contactExists(contactToDelete)) {
+        return res.status(404).send();
+    }
+
+    addressbookInstance.removeContact(contactToDelete);
+
+    return res.status(200).send();
 });
 
 module.exports = router;
