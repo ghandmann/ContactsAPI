@@ -15,7 +15,7 @@ describe("ContactsAPI", () => {
             res.should.have.status(200);
         })
 
-        it("should return an empty array", async () => {
+        it("should return an array", async () => {
             var res = await chai.request(app).get("/api/v1/contacts");
             res.body.should.be.an("array");
         })
