@@ -28,8 +28,8 @@ router.post("/api/v1/contacts", (req, res) => {
     return res.status(200).send();
 })
 
-router.delete("/api/v1/contacts", () => {
-    return;
+router.delete("/api/v1/contacts", (req, res) => {
+    return res.send();
 });
 
 module.exports = router;
