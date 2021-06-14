@@ -29,6 +29,7 @@ router.post("/api/v1/contacts", (req, res) => {
 })
 
 router.delete("/api/v1/contacts", (req, res) => {
+    const nutzloseVariable = 12;
     const {firstname, lastname} = req.body;
 
     const contactToDelete = new Contact(firstname, lastname);
