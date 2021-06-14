@@ -3,7 +3,7 @@ var router = express.Router();
 
 
 router.get("/", (req, res) => {
-    res.send("Die ContactsAPI bietet lediglich eine REST Full API an.");
+    res.send("Die ContactsAPI bietet lediglich eine REST Full API an. Das ist die SoSe-2021 Live-Demo-Version.");
 });
 
 router.get("/version", (req, res) => {
