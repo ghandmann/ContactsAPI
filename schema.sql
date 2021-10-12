@@ -1,25 +1,25 @@
 CREATE TABLE IF NOT EXISTS "contacts" (
-    id INTEGER NOT NULL PRIMARY KEY,
+    id TEXT NOT NULL PRIMARY KEY,
     firstname TEXT NOT NULL,
-    lastname TEXT,
+    lastname TEXT NOT NULL,
     nickname TEXT,
     birthdate DATE
 );
 
 CREATE TABLE IF NOT EXISTS "phonenumbers" (
-    id INTEGER NOT NULL PRIMARY KEY,
+    id TEXT NOT NULL PRIMARY KEY,
     phonenumber TEXT NOT NULL,
     category TEXT,
 
-    contactId INTEGER NOT NULL,
+    contactId TEXT NOT NULL,
     FOREIGN KEY (contactId) REFERENCES contacts(id)
 );
 
 CREATE TABLE IF NOT EXISTS "emailaddresses" (
-    id INTEGER NOT NULL PRIMARY KEY,
-    email TEXT NOT NULL,
+    id TEXT NOT NULL PRIMARY KEY,
+    emailaddress TEXT NOT NULL,
     category TEXT,
 
-    contactId INTEGER NOT NULL,
+    contactId TEXT NOT NULL,
     FOREIGN KEY (contactId) REFERENCES contacts(id)
 );
