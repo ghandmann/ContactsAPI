@@ -14,6 +14,10 @@ router.get("/api/v1/contacts", (req, res) => {
 router.post("/api/v1/contacts", (req, res) => {
     const {firstname, lastname, nickname, birthdate } = req.body;
 
+    if(!firstname || !lastname) {
+        return res.status(400).send("firstname and lastname are mandatory!");
+    }
+
     let newContact = { id: nanoid(), firstname, lastname, nickname, birthdate };
     
     addressbook.addContact(newContact);

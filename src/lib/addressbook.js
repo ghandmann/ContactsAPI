@@ -9,7 +9,7 @@ class Addressbook {
             throw new Error("Cannot add the same contact twice");
         }
 
-        db.prepare("INSERT INTO contacts (id, firstname, lastname, nickname, birthdate) VALUES(?, ?, ?, ?, ?)").run(contact.id, contact.firstName, contact.lastName, contact.nickName, contact.birthDate);
+        db.prepare("INSERT INTO contacts (id, firstname, lastname, nickname, birthdate) VALUES(?, ?, ?, ?, ?)").run(contact.id, contact.firstname, contact.lastname, contact.nickname, contact.birthdate);
     }
 
     removeContact(contactId) {

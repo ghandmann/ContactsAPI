@@ -25,10 +25,11 @@ describe("ContactsAPI", () => {
         it("should add a new contact", async () => {
             const firstName = "John";
             const lastName = "Doe-" + Math.random() * 10000;
+            const nickName = "J.D.";
 
             var createContactRes = await chai.request(app)
                 .post("/api/v1/contacts")
-                .send({ firstname: firstName, lastname: lastName, birthdate: "1990-01-01" })
+                .send({ firstname: firstName, lastname: lastName, birthdate: "1990-01-01", nickname: nickName })
             
             createContactRes.should.have.status(200);
             
@@ -37,7 +38,7 @@ describe("ContactsAPI", () => {
 
             listContactsRes.body.should.be.an("array");
 
-            const found = listContactsRes.body.find(candidate => candidate.firstName === firstName && candidate.lastName === lastName);
+            const found = listContactsRes.body.find(candidate => candidate.firstname === firstName && candidate.lastname === lastName);
             expect(found).not.to.be.undefined;
         })
 
@@ -66,13 +67,14 @@ describe("ContactsAPI", () => {
             const contactCreatedRes = await chai.request(app)
                 .get("/api/v1/contacts");
             
-            let found = contactCreatedRes.body.find(candidate => candidate.firstName === firstname && candidate.lastName === lastname);
+            let found = contactCreatedRes.body.find(candidate => candidate.firstname === firstname && candidate.lastname === lastname);
             expect(found).to.be.an("object");
+            expect(found).to.have.property("id");
             
             // Delete the newly crated Contact
             const contactDeletedRes = await chai.request(app)
                 .delete("/api/v1/contacts")
-                .send({ firstname, lastname });
+                .send({ contactId: found.id });
 
             contactDeletedRes.should.have.status(200);
             
@@ -80,7 +82,7 @@ describe("ContactsAPI", () => {
             const contactListingRes = await chai.request(app)
                 .get("/api/v1/contacts");
 
-            found = contactListingRes.body.find(candidate => candidate.firstName === firstname && candidate.lastName === lastname);
+            found = contactListingRes.body.find(candidate => candidate.firstname === firstname && candidate.lastname === lastname);
             expect(found).to.be.undefined;
         })
 
