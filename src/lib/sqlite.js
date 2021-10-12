@@ -8,7 +8,7 @@ if(process.env.NODE_ENV === "test") {
     db = new Database(":memory:");
     const dbSchema = readFileSync('./schema.sql');
 
-    db.exec(dbSchema);
+    db.exec(dbSchema.toString());
 }
 else {
     console.log("CURRENT CWD=" + process.cwd());
