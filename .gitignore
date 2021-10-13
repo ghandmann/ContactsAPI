@@ -1,6 +1,9 @@
 #VSCode
 .vscode/
 
+# ignore sqlite db storing the contacts
+contacts.db
+
 # Logs
 logs
 *.log
