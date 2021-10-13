@@ -3,50 +3,46 @@ const Addressbook = require('../src/lib/addressbook');
 const Contact = require('../src/lib/contact');
 const { nanoid } = require('../src/lib/nanoid');
 
-const dummyContact = new Contact(nanoid(), "Dummy FirstName", "Dummy LastName", "nickname", "1990-01-01");
-describe('Addressbook Class', function() {
-  let addressbook;
-  beforeEach(() => {
-    addressbook = new Addressbook();
-  });
+function buildRandomContact() {
+  return new Contact(nanoid(), "FirstName-" + nanoid(), "Lastname", "Nickname", "1990-01-01");
+}
 
+const addressbook = new Addressbook();
+
+describe('Addressbook Class', function() {
   describe('can add contacts', function() {
     it('should add the contact if the addressbook is empty', function() {
-      addressbook.addContact(dummyContact);
+      const testContact = buildRandomContact();
+      addressbook.addContact(testContact);
+
+      const contactAdded = addressbook.contactExists(testContact.id);
+      assert.strictEqual(contactAdded, true);
     });
 
     it('should throw an exception if the contact already exists', () => {
-      addressbook.addContact(dummyContact);
-      assert.throws(() => addressbook.addContact(dummyContact));
+      const testContract = buildRandomContact();
+      addressbook.addContact(testContract);
+      assert.throws(() => addressbook.addContact(testContract));
     });
   });
 
-  describe('has a assertIsContactObject method', () => {
-    it("should not throw on valid Contact objects", () => {
-      assert.doesNotThrow(() => addressbook.assertIsContactObject(dummyContact));
-    });
-    it("should throw on other objects and types", () => {
-      assert.throws(() => addressbook.assertIsContactObject(undefined));
-      assert.throws(() => addressbook.assertIsContactObject(null));
-      assert.throws(() => addressbook.assertIsContactObject("someString"));
-      assert.throws(() => addressbook.assertIsContactObject(1));
-      assert.throws(() => addressbook.assertIsContactObject({}));
-      assert.throws(() => addressbook.assertIsContactObject({"some": "object"}));
-      assert.throws(() => addressbook.assertIsContactObject([]));
-      assert.throws(() => addressbook.assertIsContactObject([1,2,3,4]));
-    })
-  });
   describe("can remove contacts", () => {
     it("should remove an existing contact", () => {
-      addressbook.addContact(dummyContact);
-      assert.strictEqual(addressbook.contacts.length, 1);
+      const testContact = buildRandomContact();
 
-      addressbook.removeContact(dummyContact);
-      assert.strictEqual(addressbook.contacts.length, 0);
+      addressbook.addContact(testContact);
+
+      const existsAfterCreate = addressbook.contactExists(testContact.id);
+      assert.strictEqual(existsAfterCreate, true);
+
+      addressbook.removeContact(testContact.id);
+
+      const existsAfterDelete = addressbook.contactExists(testContact.id);
+      assert.strictEqual(existsAfterDelete, false);
     })
 
     it("should throw on unknown contacts", () => {
-      var unknownContact = new Contact("Not tracked", "by addressbook");
+      var unknownContact = buildRandomContact();
       assert.throws(() => addressbook.removeContact(unknownContact));
     })
   })

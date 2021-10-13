@@ -1,33 +1,29 @@
 const Contact = require("../src/lib/contact");
 const assert = require("assert");
+const { nanoid } = require('../src/lib/nanoid');
 
 describe("Contact Class", () => {
     describe("constructor", () => {
         it("work with firstname and lastname", () => {
-            const newContact = new Contact("John", "Doe");
+            const newId = nanoid();
+            const newContact = new Contact(newId, "John", "Doe", "Nickname", "1990-01-01");
 
-            assert.strictEqual(newContact.firstName, "John");
-            assert.strictEqual(newContact.lastName, "Doe");
+            assert.strictEqual(newContact.id, newId);
+            assert.strictEqual(newContact.firstname, "John");
+            assert.strictEqual(newContact.lastname, "Doe");
+            assert.strictEqual(newContact.nickname, "Nickname");
+            assert.strictEqual(newContact.birthdate, "1990-01-01");
         });
 
-        it("throws on missing firstname", () => assert.throws(() => new Contact()));
-        it("throws on missing lastname", () => assert.throws(() => new Contact("FirstName")));
+        it("throws on missing everything", () => assert.throws(() => new Contact()));
 
-        it("throws on empty firstname", () => assert.throws(() => new Contact("", "LastName")));
-        it("throws on empty lastname", () => assert.throws(() => new Contact("FirstName","")));
+        it("throws on missing firstname", () => assert.throws(() => new Contact(nanoid())));
+        it("throws on missing lastname", () => assert.throws(() => new Contact(nanoid(), "FirstName")));
 
-        it("throws on undefined firstname", () => assert.throws(() => new Contact(undefined, "LastName")));
-        it("throws on undefined lastname", () => assert.throws(() => new Contact("FirstName", undefined)));
+        it("throws on empty firstname", () => assert.throws(() => new Contact(nanoid(), "", "LastName")));
+        it("throws on empty lastname", () => assert.throws(() => new Contact(nanoid(), "FirstName","")));
+
+        it("throws on undefined firstname", () => assert.throws(() => new Contact(nanoid(), undefined, "LastName")));
+        it("throws on undefined lastname", () => assert.throws(() => new Contact(nanoid(), "FirstName", undefined)));
     });
-    describe("getIdentifier", () => {
-        it("should return the concatenated lastname and firstname", () => {
-            const contact = new Contact("FirstName", "LastName");
-
-            const actualIdentifier = contact.getIdentifier();
-
-            const expectedIdentifier = "LastNameFirstName";
-
-            assert.strictEqual(actualIdentifier, expectedIdentifier);
-        })
-    })
 });
