@@ -5,10 +5,10 @@
   "main": "app.js",
   "scripts": {
     "start": "cd src/api && npm start",
-    "test": "mocha",
+    "test": "NODE_ENV=test mocha",
     "lint": "eslint .",
     "postinstall": "cd src/api/ && npm install",
-    "cover": "nyc mocha"
+    "cover": "NODE_ENV=test nyc mocha"
   },
   "author": "",
   "license": "ISC",
