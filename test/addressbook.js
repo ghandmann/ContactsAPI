@@ -1,8 +1,9 @@
 const assert = require('assert');
 const Addressbook = require('../src/lib/addressbook');
 const Contact = require('../src/lib/contact');
+const { nanoid } = require('../src/lib/nanoid');
 
-const dummyContact = new Contact("dummy", "dummy");
+const dummyContact = new Contact(nanoid(), "Dummy FirstName", "Dummy LastName", "nickname", "1990-01-01");
 describe('Addressbook Class', function() {
   let addressbook;
   beforeEach(() => {

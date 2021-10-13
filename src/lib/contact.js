@@ -1,10 +1,10 @@
 class Contact {
     constructor(id, firstName, lastName, nickName, birthDate) {
         this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.nickName = nickName;
-        this.birthDate = birthDate;
+        this.firstname = firstName;
+        this.lastname = lastName;
+        this.nickname = nickName;
+        this.birthdate = birthDate;
 
         this.validate();
     }
@@ -18,12 +18,12 @@ class Contact {
         }
 
         assertIsNotUndefinedNullOrEmpty(this.id, "id");
-        assertIsNotUndefinedNullOrEmpty(this.firstName, "firstName");
-        assertIsNotUndefinedNullOrEmpty(this.lastName, "lastName");
+        assertIsNotUndefinedNullOrEmpty(this.firstname, "firstName");
+        assertIsNotUndefinedNullOrEmpty(this.lastname, "lastName");
     }
 
     fullName() {
-        return this.lastName + ", " + this.firstName;
+        return this.lastname + ", " + this.firstname;
     }
 }
 

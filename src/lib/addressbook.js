@@ -5,7 +5,7 @@ class Addressbook {
     }
 
     addContact(contact) {
-        if(this.contactExistsByName(contact.firstName, contact. lastName)) {
+        if(this.contactExistsByName(contact.firstname, contact.lastname)) {
             throw new Error("Cannot add the same contact twice");
         }
 
@@ -37,6 +37,12 @@ class Addressbook {
     }
 
     getPhonenumbersByContact(contactId) {
+        const found = db.prepare("SELECT id FROM contacts WHERE id = ?").get(contactId);
+
+        if(!found) {
+            throw new Error(`No contact found for contactId='${contactId}`);
+        }
+
         const phonenumbers = db.prepare("SELECT * FROM phonenumbers WHERE contactId = ?").all(contactId);
 
         return phonenumbers;
@@ -57,6 +63,11 @@ class Addressbook {
     }
 
     deletePhoneNumber(contactId, phonenumberId) {
+        const found = db.prepare("SELECT id FROM phonenumbers WHERE id = ? AND contactId = ?").get(phonenumberId, contactId);
+        if(!found) {
+            throw new Error(`No phonenumber with id='${phonenumberId}' for contactId='${contactId}' found!'`);
+        }
+
         db.prepare("DELETE FROM phonenumbers WHERE id = ? AND contactId = ?").run(phonenumberId, contactId);
     }
 
@@ -67,9 +78,19 @@ class Addressbook {
     }
 
     getEmailAddressesByContact(contactId) {
+        this.ensureContactExists(contactId);
+
         const emailaddresses = db.prepare("SELECT * FROM emailaddresses WHERE contactId = ?").all(contactId);
 
         return emailaddresses;
+    }
+
+    ensureContactExists(contactId) {
+        const contactExists = this.findContactById(contactId);
+        
+        if (!contactExists) {
+            throw new Error(`No contact with contactId='${contactId}' found.`);
+        }
     }
 
     addEmailAddress(id, contactId, emailaddress, category) {
@@ -81,7 +102,16 @@ class Addressbook {
     }
 
     deleteEmailAddress(id, contactId) {
+        const found = db.prepare("SELECT * FROM emailaddresses WHERE id = ? AND contactId = ?").get(id, contactId);
+        if(!found) {
+            throw new Error(`No emailaddress with id='${id}' for contactId='${contactId}'`);
+        }
+
         db.prepare("DELETE FROM emailaddresses WHERE id = ? AND contactId = ?").run(id, contactId);
+    }
+
+    findContactById(contactId) {
+        return db.prepare("SELECT * FROM contacts WHERE id = ?").get(contactId);
     }
 }
 
