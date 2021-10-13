@@ -3,6 +3,7 @@
 const chai = require("chai");
 const chaiHttp = require("chai-http");
 const app = require("../src/api/app");
+const db = require("../src/lib/sqlite");
 
 // Configure chai
 chai.use(chaiHttp);
@@ -16,6 +17,9 @@ describe("contacts API", () => {
         })
 
         it("should return an empty array", async () => {
+            // Make sure there are no entries in the database, otherwise this test will fail!
+            db.prepare("DELETE FROM contacts").run();
+
             var res = await chai.request(app).get("/api/v1/contacts");
             res.body.should.be.an("array");
             res.body.should.have.length(0);
