@@ -1,3 +1,4 @@
+[![Coverage Status](https://coveralls.io/repos/github/ghandmann/ContactsAPI/badge.svg?branch=main)](https://coveralls.io/github/ghandmann/ContactsAPI?branch=main)
 # ContactsAPI
 
 Eine simple WebAPI zum Verwalten von Kontakten.
