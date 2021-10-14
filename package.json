@@ -8,7 +8,7 @@
     "test": "NODE_ENV=test mocha",
     "lint": "eslint .",
     "postinstall": "cd src/api/ && npm install",
-    "cover": "NODE_ENV=test nyc mocha"
+    "cover": "NODE_ENV=test npx nyc report --reporter=lcov --reporter=text"
   },
   "author": "",
   "license": "ISC",
