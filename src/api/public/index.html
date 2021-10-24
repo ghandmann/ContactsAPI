@@ -4,7 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Stylesheet from https://bootswatch.com/flatly/ -->
+    <link href="/bootstrap/css/bootstrap.min.flatly.css" rel="stylesheet">
 
     <link rel="stylesheet" href="/bootstrap-icons/bootstrap-icons.css">
     <style>
@@ -13,7 +14,7 @@
     <title>Contacts API</title>
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">Contacts API</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -22,7 +23,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active text-success" data-bs-toggle="modal" data-bs-target="#addContactModal" href="#"><i class="bi-person-plus"></i> Add a new contact</a>
+              <a class="nav-link active" data-bs-toggle="modal" data-bs-target="#addContactModal" href="#"><i class="bi-person-plus"></i> Add a new contact</a>
             </li>
           </ul>
           <form class="d-flex">
