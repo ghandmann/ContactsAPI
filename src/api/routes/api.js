@@ -53,10 +53,10 @@ router.get("/api/v1/phonenumbers/:contactId", (req, res) => {
 });
 
 router.post("/api/v1/phonenumbers/:contactId", (req, res) => {
-    const { phoneNumber, category } = req.body;
+    const { phonenumber, category } = req.body;
 
     const newPhoneNumberId = nanoid();
-    addressbook.addPhoneNumber(newPhoneNumberId, req.params.contactId, phoneNumber, category);
+    addressbook.addPhoneNumber(newPhoneNumberId, req.params.contactId, phonenumber, category);
 
     return res.status(200).send({ id: newPhoneNumberId });
 });
