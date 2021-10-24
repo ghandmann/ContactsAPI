@@ -11,7 +11,6 @@ if(process.env.NODE_ENV === "test") {
     db.exec(dbSchema.toString());
 }
 else {
-    console.log("CURRENT CWD=" + process.cwd());
     db = new Database('contacts.db', { fileMustExist: true });
 }
 
