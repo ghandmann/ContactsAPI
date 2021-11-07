@@ -5,12 +5,19 @@
         "es6": true,
         "mocha": true,
         "node": true,
-        "jquery": true,
+        "jquery": true
     },
     "extends": "eslint:recommended",
     "parserOptions": {
         "ecmaVersion": 12
     },
     "rules": {
+    },
+    "ignorePatterns": [
+        "src/api/public/jquery/*.js",
+        "src/api/public/bootstrap/js/*.js"
+    ],
+    "globals": {
+        "bootstrap": "readonly"
     }
 }
