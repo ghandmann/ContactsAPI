@@ -136,7 +136,7 @@ describe("phonenumbers API", () => {
         });
 
         it("should add new phonenumbers", async () => {
-            const addResponse = await chai.request(app).post(testEndpointUrl).send({ phoneNumber: "1234", category: "default" });
+            const addResponse = await chai.request(app).post(testEndpointUrl).send({ phonenumber: "1234", category: "default" });
 
             addResponse.should.have.status(200);
             addResponse.body.should.be.a("object");
@@ -158,7 +158,7 @@ describe("phonenumbers API", () => {
         });
 
         it("should delete phonenumbers", async () => {
-            const addResponse = await chai.request(app).post(testEndpointUrl).send({ phoneNumber: "1234", category: "default" });
+            const addResponse = await chai.request(app).post(testEndpointUrl).send({ phonenumber: "1234", category: "default" });
 
             addResponse.should.have.status(200);
 
