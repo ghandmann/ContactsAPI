@@ -41,10 +41,10 @@ router.post("/phonenumbers/:contactId", (req, res) => {
 });
 
 router.delete("/phonenumbers/:contactId", (req, res) => {
-    const { id } = req.body;
+    const { phonenumberId } = req.body;
 
     try {
-        addressbook.deletePhoneNumber(req.params.contactId, id);
+        addressbook.deletePhoneNumber(req.params.contactId, phonenumberId);
         return res.status(200).send();
     }
     catch(error) {

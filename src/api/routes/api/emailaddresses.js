@@ -41,10 +41,10 @@ router.post("/emailaddresses/:contactId", (req, res) => {
 });
 
 router.delete("/emailaddresses/:contactId", (req, res) => {
-    const { id } = req.body;
+    const { emailaddressId } = req.body;
 
     try {
-        addressbook.deleteEmailAddress(id, req.params.contactId);
+        addressbook.deleteEmailAddress(emailaddressId, req.params.contactId);
         return res.status(200).send();
     }
     catch(error) {

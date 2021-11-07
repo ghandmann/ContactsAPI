@@ -315,7 +315,7 @@ async function addPhonenumberToContact(contactId, phonenumber, category) {
 
 // Delete the phonenumber of a contact via DELETE request to the API
 async function deletePhonenumberFromContact(contactId, phonenumberId) {
-    const payload = { id: phonenumberId };
+    const payload = { phonenumberId };
     try {
         
         await sendDeleteRequest(`/api/v1/phonenumbers/${contactId}/`, payload);
@@ -384,7 +384,7 @@ async function addEmailaddressToContact(contactId, emailaddress, category) {
 
 // Delete the emailaddress of a contact via DELETE request to the API
 async function deleteEmailaddressFromContact(contactId, emailaddressId) {
-    const payload = { id: emailaddressId };
+    const payload = { emailaddressId };
     try {
         await sendDeleteRequest(`/api/v1/emailaddresses/${contactId}/`, payload);
 

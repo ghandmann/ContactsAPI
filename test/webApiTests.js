@@ -180,7 +180,7 @@ describe("phonenumbers API", () => {
 
             const phonenumberId = addResponse.body.id;
 
-            const deleteResponse = await chai.request(app).delete(testEndpointUrl).send({ id: phonenumberId });
+            const deleteResponse = await chai.request(app).delete(testEndpointUrl).send({ phonenumberId: phonenumberId });
 
             deleteResponse.should.have.status(200);
         });
@@ -260,7 +260,7 @@ describe("emailaddresses API", () => {
     
                 const emailaddressId = addResponse.body.id;
     
-                const deleteResponse = await chai.request(app).delete(testEndpointUrl).send({ id: emailaddressId });
+                const deleteResponse = await chai.request(app).delete(testEndpointUrl).send({ emailaddressId: emailaddressId });
     
                 deleteResponse.should.have.status(200);
             });
