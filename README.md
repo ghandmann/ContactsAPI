@@ -60,6 +60,18 @@ Die Datei `main.yml` definiert die Kommandos die ausgeführt werden, bei jedem n
 
 Die Datei `docker-image.yml` enhtält die Kommandos zum erzeugen und veröffentlichen eines fertigen Docker Images das die gesamte Anwendung kapselt.
 
+## Erzeugen der Datenbank
+
+Bevor die Anwendung funktionieren kann, musst die SQLite3 Datenbank erzeugt werden.
+
+Die geht am einfachsten per Kommandozeile:
+
+```
+$ cat schema.sql | sqlite3 src/api/contacts.db
+```
+
+Wichtig ist, dass die Datenbankam Ende unter `$Repository/src/api/contacts.db` liegt.
+
 ## Starten der Anwendung
 
 ### Mit Node.js

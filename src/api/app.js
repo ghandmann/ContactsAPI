@@ -1,12 +1,14 @@
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 
-var homeRouter = require('./routes/home');
-var apiRouter = require("./routes/api");
+const homeRouter = require('./routes/home');
 
-var app = express();
+// Load all the API endpoints into a single array
+const apiEndpoints = require('./routes/api');
+
+const app = express();
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -15,6 +17,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', homeRouter);
-app.use('/', apiRouter);
+app.use('/api/v1/', [ apiEndpoints ]);
 
 module.exports = app;

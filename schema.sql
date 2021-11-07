@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS "phonenumbers" (
     category TEXT,
 
     contactId TEXT NOT NULL,
-    FOREIGN KEY (contactId) REFERENCES contacts(id)
+    FOREIGN KEY (contactId) REFERENCES contacts(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS "emailaddresses" (
@@ -21,5 +21,5 @@ CREATE TABLE IF NOT EXISTS "emailaddresses" (
     category TEXT,
 
     contactId TEXT NOT NULL,
-    FOREIGN KEY (contactId) REFERENCES contacts(id)
+    FOREIGN KEY (contactId) REFERENCES contacts(id) ON DELETE CASCADE
 );

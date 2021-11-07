@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Stylesheet from https://bootswatch.com/flatly/ -->
+    <link href="/bootstrap/css/bootstrap.min.flatly.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="/bootstrap-icons/bootstrap-icons.css">
+    <style>
+    </style>
+
+    <title>Contacts API</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Contacts API</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" data-bs-toggle="modal" data-bs-target="#addContactModal" href="#"><i class="bi-person-plus"></i> Add a new contact</a>
+            </li>
+          </ul>
+          <form class="d-flex">
+            <input class="form-control me-2 disabled" type="search" placeholder="to be implemented" aria-label="Search">
+            <button class="btn btn-outline-success disabled" type="submit">Search</button>
+          </form>
+        </div>
+      </div>
+    </nav>
+    <div class="container">
+      <h2>Contactlist</h2>
+      <div id="contacts">
+        <div class="alert alert-primary d-flex align-items-center" role="alert">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
+            <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+          </svg>
+          <div>
+            There are no contacts to show.
+          </div>
+        </div>
+      </div>
+
+      <!-- add contact modal -->
+      <div class="modal fade" id="addContactModal" tabindex="-1" aria-labelledby="addContactModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="addContactModalLabel">Add Contact</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+              <div class="modal-body">
+                  <div class="mb-3">
+                    <label for="firstname" class="form-label">Firstname</label>
+                    <input type="email" class="form-control" id="firstname">
+                  </div>
+                  <div class="mb-3">
+                    <label for="lastname" class="form-label">Lastname</label>
+                    <input type="email" class="form-control" id="lastname">
+                  </div>
+                  <div class="mb-3">
+                    <label for="nickname" class="form-label">Nickname</label>
+                    <input type="email" class="form-control" id="nickname">
+                  </div>
+                  <div class="mb-3">
+                    <label for="birthdate" class="form-label">Birthdate</label>
+                    <input type="email" class="form-control" id="birthdate" placeholder="yyyy-mm-dd">
+                  </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="save-changes btn btn-primary">Add Contact</button>
+              </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- add phonenumber modal -->
+      <div class="modal fade" id="addPhonenumberModal" tabindex="-1" aria-labelledby="addPhonenumberModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="addPhonenumberModalLabel">Add Phonenumber</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+              <div class="modal-body">
+                  <div class="mb-3">
+                    <label for="newPhonenumber" class="form-label">Phonenumber</label>
+                    <input type="email" class="form-control" id="newPhonenumber">
+                  </div>
+                  <div class="mb-3">
+                    <label for="phonenumberCategory" class="form-label">Category</label>
+                    <input type="text" class="form-control" id="phonenumberCategory" placeholder="default">
+                  </div>
+                  <input type="hidden" name="contactId" />
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="save-changes btn btn-primary">Save changes</button>
+              </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- add emailaddress modal -->
+      <div class="modal fade" id="addEmailaddressModal" tabindex="-1" aria-labelledby="addEmailaddressModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="addEmailaddressModalLabel">Add Emailaddress</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+              <div class="modal-body">
+                  <div class="mb-3">
+                    <label for="newEmailaddress" class="form-label">Emailaddress</label>
+                    <input type="email" class="form-control" id="newEmailaddress">
+                  </div>
+                  <div class="mb-3">
+                    <label for="emailaddressCategory" class="form-label">Category</label>
+                    <input type="text" class="form-control" id="emailaddressCategory" placeholder="default">
+                  </div>
+                  <input type="hidden" name="contactId" />
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="save-changes btn btn-primary">Save changes</button>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="/jquery/jquery-3.6.0.min.js"></script>
+    <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/client.js"></script>
+  </body>
+</html>
