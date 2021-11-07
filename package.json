@@ -5,6 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "cd src/api && npm start",
+    "nodemon": "cd src/api && npm run nodemon",
     "test": "NODE_ENV=test mocha",
     "lint": "eslint .",
     "postinstall": "cd src/api/ && npm install",
