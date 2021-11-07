@@ -1,19 +1,26 @@
 // Shorthand document.ready function from JQuery
 // https://learn.jquery.com/using-jquery-core/document-ready/
 $(async () => {
-    console.log("ContactsAPI client.js document.ready event!")
-    registerModalButtons();
-    const contacts = await loadContacts();
-    renderContacts(contacts);
+    await init();
 });
 
-async function loadContacts() {
+async function init() {
+    registerModalButtons();
+
+    // Technically we do not reload here, since this is the first load.
+    await reloadContactList();
+}
+
+// Fetches a list of contacts from the API
+async function loadContactList() {
     const res = await fetch("/api/v1/contacts");
     const contactList = await res.json();
 
     return contactList;
 }
 
+// Since buttons in plain HTML do nothing (only exception being inside a form-tag)
+// we need to "wire up" the actions we want the buttons to fullfill when they get clicked
 function registerModalButtons() {
     $("button.add-contact").on("click", () => bootstrap.Modal.getOrCreateInstance("#addContactModal").show());
     $("#addContactModal button.save-changes").on("click", addContact);
@@ -62,9 +69,8 @@ function registerModalButtons() {
     registerAddEmailaddressButton();
 }
 
+// Adds a new contact to the contactList by sending a POST request to the API
 async function addContact() {
-    const modal = $("#addContactModal");
-
     const firstname = $("input#firstname").val();
     const lastname = $("input#lastname").val();
     const nickname = $("input#nickname").val();
@@ -81,11 +87,13 @@ async function addContact() {
     bootstrap.Modal.getOrCreateInstance("#addContactModal").hide();
 }
 
+// (re)loads the contactList from the API and renders the contacts on the page
 async function reloadContactList() {
-    const contacts = await loadContacts();
-    renderContacts(contacts);
+    const contactList = await loadContactList();
+    renderContacts(contactList);
 }
 
+// Responsible for rendering each contact from a contactList on the page
 function renderContacts(contactList) {
     const contactsContainer = $("#contacts");
     contactsContainer.empty();
@@ -112,6 +120,7 @@ function renderContacts(contactList) {
     contactsContainer.append(contactsAccordion);
 }
 
+// Renders a single contact
 function renderContactListItem(contact) {
     const elementId = `contact-${contact.id}`;
     const contactItem = $(`
@@ -147,6 +156,7 @@ function renderContactListItem(contact) {
     return contactItem;
 }
 
+// Loads the details (emailaddresses and phonenumbers) for a given contactId from the API
 async function loadContactDetails(contactId) {
     const phonenumbers = await fetchPhonenumbers(contactId);
     const emailaddresses = await fetchEmailaddresses(contactId);
@@ -157,16 +167,19 @@ async function loadContactDetails(contactId) {
     };
 }
 
+// Loads the phonenumbers for a given contactId from the API
 async function fetchPhonenumbers(contactId) {
     const response = await fetch("/api/v1/phonenumbers/" + contactId);
     return response.json();
 }
 
+// Loads the emailaddresses for a given contactId from the API
 async function fetchEmailaddresses(contactId) {
     const response = await fetch("/api/v1/emailaddresses/" + contactId);
     return response.json();
 }
 
+// Renders the details of a contact
 function renderContactDetails(contactId, contact, contactDetails) {
     const body = $(`
     <div class="accordion-body">
@@ -199,6 +212,7 @@ function renderContactDetails(contactId, contact, contactDetails) {
     return body;
 }
 
+// Make the "Add Phonenumber" button actually do something
 function registerClickEventForAddPhonenumberButton(body, contactId) {
     const addPhonenumberButton = $(".add-phonenumber-button", body);
     addPhonenumberButton.on("click", () => {
@@ -210,6 +224,7 @@ function registerClickEventForAddPhonenumberButton(body, contactId) {
     });
 }
 
+// Make the "Add Emailaddress" button actually do something
 function registerClickEventForAddEmailaddressButton(body, contactId) {
     const addEmailaddressButton = $(".add-emailaddress-button", body);
     addEmailaddressButton.on("click", () => { 
@@ -221,6 +236,7 @@ function registerClickEventForAddEmailaddressButton(body, contactId) {
     });
 }
 
+// Make the "Delete Contact" button actually do something
 function registerClickEventForDeleteContactButton(body, contactId) {
     $("button.delete-contact", body).on("click", async () => {
         const payload = { contactId };
@@ -231,6 +247,7 @@ function registerClickEventForDeleteContactButton(body, contactId) {
 
 }
 
+// Render the list of phonenumbers for a given contactId
 function renderPhonenumberListing(contactId, phonenumbers) {
     if(phonenumbers.length === 0) {
         return $(`<li class="list-group-item">This contact has no phonenumbers</li>`);
@@ -249,7 +266,7 @@ function renderPhonenumberListing(contactId, phonenumbers) {
     );
 }
 
-
+// Render the list of emailaddresses for a given contactId
 function renderEmailaddressListing(contactId, emailaddresses) {
     if(emailaddresses.length === 0) {
         return $(`<li class="list-group-item">This contact has no emailaddresses</li>`);
@@ -265,9 +282,13 @@ function renderEmailaddressListing(contactId, emailaddresses) {
     
     return emailaddresses.map(
         (emailaddress) => renderListItem(contactId, emailaddress.id, emailaddress.emailaddress, emailaddress.category, emailaddressDeleteAction)
-        );
-    }
+    );
+}
 
+// Generic function to create a listItem (<li>) based on the given parameters
+// "deleteAction" is special: It is not a "normal" variable but a function, that is passed
+// by the caller. This is known as "inversion of controll" since the caller now defines what inside this function
+// happens when the "Delete" button is pressed.
 function renderListItem(contactId, itemId, itemText, itemCategory, deleteAction) {
     const item = $(`<li class="list-group-item" data-id="${itemId}" data-contact-id="${contactId}">${itemText} <span class="badge bg-secondary">${itemCategory}</span></li>`);
 
@@ -278,6 +299,7 @@ function renderListItem(contactId, itemId, itemText, itemCategory, deleteAction)
     return item;
 }
 
+// Add a phonenumber to a contact via POST request to the API
 async function addPhonenumberToContact(contactId, phonenumber, category) {
     const payload = { phonenumber , category };
 
@@ -291,6 +313,7 @@ async function addPhonenumberToContact(contactId, phonenumber, category) {
     }
 }
 
+// Delete the phonenumber of a contact via DELETE request to the API
 async function deletePhonenumberFromContact(contactId, phonenumberId) {
     const payload = { id: phonenumberId };
     try {
@@ -304,14 +327,17 @@ async function deletePhonenumberFromContact(contactId, phonenumberId) {
     }
 }
 
+// Helper function for POST requests
 async function sendPostRequest(path, payload) {
     sendRequestWithPayload(path, "POST", payload);
 }
 
+// Helper function for DELETE requests
 async function sendDeleteRequest(path, payload) {
     sendRequestWithPayload(path, "DELETE", payload);
 }
 
+// Generic helper function for sending requests
 async function sendRequestWithPayload(path, method, payload) {
     const res = await fetch(path, {
         method,
@@ -326,10 +352,12 @@ async function sendRequestWithPayload(path, method, payload) {
     }
 }
 
+// Well, shows an error. :)
 function showError(errorMessage) {
     console.log(errorMessage);
 }
 
+// Reload and render the phonenumbers for a given contactId
 async function reloadPhonenumbersForContact(contactId) {
     const phonenumbers = await fetchPhonenumbers(contactId);
 
@@ -340,6 +368,7 @@ async function reloadPhonenumbersForContact(contactId) {
     phonenumbersListContainer.append(phonenumbersListing);
 }
 
+// Add a phonenumber to a contact via POST request to the API
 async function addEmailaddressToContact(contactId, emailaddress, category) {
     const payload = { emailaddress, category };
 
@@ -353,6 +382,7 @@ async function addEmailaddressToContact(contactId, emailaddress, category) {
     }
 }
 
+// Delete the emailaddress of a contact via DELETE request to the API
 async function deleteEmailaddressFromContact(contactId, emailaddressId) {
     const payload = { id: emailaddressId };
     try {
@@ -365,7 +395,7 @@ async function deleteEmailaddressFromContact(contactId, emailaddressId) {
     }
 }
 
-
+// Reload and render the emailaddresses for a given contactId
 async function reloadEmailaddressesForContact(contactId) {
     const emailaddresses = await fetchEmailaddresses(contactId);
 
