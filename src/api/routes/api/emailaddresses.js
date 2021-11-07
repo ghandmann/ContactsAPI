@@ -1,4 +1,6 @@
 var { nanoid } = require('../../../lib/nanoid');
+const { EmailaddressAlreadyExistsError } = require('../../../lib/customErrors');
+
 var express = require('express');
 var router = express.Router();
 
@@ -23,10 +25,19 @@ router.get("/emailaddresses/:contactId", (req, res) => {
 router.post("/emailaddresses/:contactId", (req, res) => {
     const { emailaddress, category } = req.body;
 
-    const newEmailAddressId = nanoid();
-    addressbook.addEmailAddress(newEmailAddressId, req.params.contactId, emailaddress, category);
+    try {
+        const newEmailAddressId = nanoid();
+        addressbook.addEmailAddress(newEmailAddressId, req.params.contactId, emailaddress, category);
+    
+        return res.status(200).send({ id: newEmailAddressId });
+    }
+    catch(error) {
+        if(error instanceof EmailaddressAlreadyExistsError) {
+            return res.status(409).send(error.message);
+        }
 
-    return res.status(200).send({ id: newEmailAddressId });
+        throw error;
+    }
 });
 
 router.delete("/emailaddresses/:contactId", (req, res) => {

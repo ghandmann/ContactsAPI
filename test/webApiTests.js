@@ -54,6 +54,22 @@ describe("contacts API", () => {
             
             createContactRes.should.have.status(400);
         })
+
+        it("should return 409 conflict if the contact already exists", async () => {
+            const randomContact = generateRandomContactData();
+
+            const firstCreateResponse = await chai.request(app)
+                .post("/api/v1/contacts")
+                .send(randomContact);
+            
+            firstCreateResponse.should.have.status(200);
+
+            const secondCreateResponse = await chai.request(app)
+                .post("/api/v1/contacts")
+                .send(randomContact);
+            
+            secondCreateResponse.should.have.status(409);
+        });
     })
 
     describe("DELETE /api/v1/contacts Endpoint", () => {
@@ -168,6 +184,14 @@ describe("phonenumbers API", () => {
 
             deleteResponse.should.have.status(200);
         });
+
+        it("MARKER should return 409 on adding the same phonenumber twice", async () => {
+            const firstAddResponse = await chai.request(app).post(testEndpointUrl).send({ phonenumber: "12-34-56-78", category: "default" });
+            firstAddResponse.should.have.status(200);
+
+            const secondAddResponse = await chai.request(app).post(testEndpointUrl).send({ phonenumber: "12-34-56-78", category: "default" });
+            secondAddResponse.should.have.status(409);
+        });
     });
 });
 
@@ -240,12 +264,26 @@ describe("emailaddresses API", () => {
     
                 deleteResponse.should.have.status(200);
             });
+
+            it("should return 409 on adding the same emailaddress twice", async () => {
+                const firstAddResponse = await chai.request(app).post(testEndpointUrl).send({ emailaddress: "another@email.com", category: "default" });
+                firstAddResponse.should.have.status(200);
+
+                const secondAddResponse = await chai.request(app).post(testEndpointUrl).send({ emailaddress: "another@email.com", category: "default" });
+                secondAddResponse.should.have.status(409);
+            })
         });
     });
 });
 
+// Creates a new random contact via the API
 async function createRandomContact() {
-    var create = await chai.request(app).post("/api/v1/contacts").send({ firstname: "testing" + Math.random(), lastname: "testing" + Math.random(), nickname: "testing", birthdate: "1990-01-01"});
+    var create = await chai.request(app).post("/api/v1/contacts").send(generateRandomContactData());
 
     return create.body.id;
+}
+
+// Generates a random contact that should not conflict with other already existing contacts
+function generateRandomContactData() {
+    return { firstname: "testing" + Math.random(), lastname: "testing" + Math.random(), nickname: "testing", birthdate: "1990-01-01"};
 }

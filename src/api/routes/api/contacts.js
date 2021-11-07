@@ -2,6 +2,8 @@ var { nanoid } = require('../../../lib/nanoid');
 var express = require('express');
 var router = express.Router();
 
+const { ContactAlreadyExistsError } = require('../../../lib/customErrors');
+
 const Addressbook = require("../../../lib/addressbook");
 
 const addressbook = new Addressbook();
@@ -18,11 +20,19 @@ router.post("/contacts", (req, res) => {
         return res.status(400).send("firstname and lastname are mandatory!");
     }
 
-    let newContact = { id: nanoid(), firstname, lastname, nickname, birthdate };
+    try {
+        const newContact = { id: nanoid(), firstname, lastname, nickname, birthdate };
+        addressbook.addContact(newContact);
     
-    addressbook.addContact(newContact);
+        return res.status(200).send({ id: newContact.id });
+    }
+    catch(error) {
+        if(error instanceof ContactAlreadyExistsError) {
+            return res.status(409).send(error.message);
+        }
 
-    return res.status(200).send({ id: newContact.id });
+        throw error;
+    }
 })
 
 router.delete("/contacts", (req, res) => {

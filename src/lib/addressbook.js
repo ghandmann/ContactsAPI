@@ -1,12 +1,13 @@
 const db = require('./sqlite');
 
+const { ContactAlreadyExistsError, EmailaddressAlreadyExistsError, PhonenumberAlreadyExistsError } = require('./customErrors');
 class Addressbook {
     constructor() {
     }
 
     addContact(contact) {
         if(this.contactExistsByName(contact.firstname, contact.lastname)) {
-            throw new Error("Cannot add the same contact twice");
+            throw new ContactAlreadyExistsError(contact.firstname, contact.lastname);
         }
 
         db.prepare("INSERT INTO contacts (id, firstname, lastname, nickname, birthdate) VALUES(?, ?, ?, ?, ?)").run(contact.id, contact.firstname, contact.lastname, contact.nickname, contact.birthdate);
@@ -50,7 +51,7 @@ class Addressbook {
 
     addPhoneNumber(id, contactId, phonenumber, category) {
         if(this.contactHasPhonenumber(contactId, phonenumber)) {
-            throw new Error(`Conctact with contactId=${contactId} already has phonenumber=${phonenumber}`);
+            throw new PhonenumberAlreadyExistsError(phonenumber, contactId);
         }
 
         db.prepare("INSERT INTO phoneNumbers (id, contactId, phoneNumber, category) VALUES (?, ?, ?, ?);").run(id, contactId, phonenumber, category);
@@ -95,7 +96,7 @@ class Addressbook {
 
     addEmailAddress(id, contactId, emailaddress, category) {
         if(this.contactHasEmailaddress(contactId, emailaddress)) {
-            throw new Error(`Contact with contactId=${contactId} already has emailaddress=${emailaddress}`);
+            throw new EmailaddressAlreadyExistsError(emailaddress, contactId);
         }
         
         db.prepare("INSERT INTO emailaddresses (id, contactId, emailaddress, category) VALUES (?, ?, ?, ?)").run(id, contactId, emailaddress, category);

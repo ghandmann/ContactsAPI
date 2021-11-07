@@ -1,4 +1,6 @@
 var { nanoid } = require('../../../lib/nanoid');
+const { PhonenumberAlreadyExistsError } = require('../../../lib/customErrors');
+
 var express = require('express');
 var router = express.Router();
 
@@ -23,10 +25,19 @@ router.get("/phonenumbers/:contactId", (req, res) => {
 router.post("/phonenumbers/:contactId", (req, res) => {
     const { phonenumber, category } = req.body;
 
-    const newPhoneNumberId = nanoid();
-    addressbook.addPhoneNumber(newPhoneNumberId, req.params.contactId, phonenumber, category);
+    try {
+        const newPhoneNumberId = nanoid();
+        addressbook.addPhoneNumber(newPhoneNumberId, req.params.contactId, phonenumber, category);
+    
+        return res.status(200).send({ id: newPhoneNumberId });
+    }
+    catch(error) {
+        if(error instanceof PhonenumberAlreadyExistsError) {
+            return res.status(409).send(error.message);
+        }
 
-    return res.status(200).send({ id: newPhoneNumberId });
+        throw error;
+    }
 });
 
 router.delete("/phonenumbers/:contactId", (req, res) => {
