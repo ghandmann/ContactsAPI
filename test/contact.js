@@ -25,5 +25,12 @@ describe("Contact Class", () => {
 
         it("throws on undefined firstname", () => assert.throws(() => new Contact(nanoid(), undefined, "LastName")));
         it("throws on undefined lastname", () => assert.throws(() => new Contact(nanoid(), "FirstName", undefined)));
+        it("should return the full name", () => {
+            var newContact = new Contact(123, "My FirstName", "My LastName", "Nickname", "1990-01-01");
+
+            const fullName = newContact.fullName();
+
+            fullName.should.be.equal("My LastName, My FirstName");
+        })
     });
 });
