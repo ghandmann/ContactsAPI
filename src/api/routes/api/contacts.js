@@ -10,7 +10,6 @@ const addressbook = new Addressbook();
 
 router.get("/contacts", (req, res) => {
     const contactsList = addressbook.getContacts();
-    res.status(400);
     res.send(contactsList);
 });
 
