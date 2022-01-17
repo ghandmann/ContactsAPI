@@ -22,7 +22,7 @@ class Contact {
         assertIsNotUndefinedNullOrEmpty(this.lastname, "lastName");
     }
 
-    fullName() {
+    fullName(useLessParam) {
         return this.lastname + ", " + this.firstname;
     }
 }
