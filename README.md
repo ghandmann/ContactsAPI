@@ -1,3 +1,5 @@
+**INFO**: This repository is archived and not used anymore!
+
 [![Coverage Status](https://coveralls.io/repos/github/ghandmann/ContactsAPI/badge.svg?branch=main)](https://coveralls.io/github/ghandmann/ContactsAPI?branch=main)
 # ContactsAPI
 
